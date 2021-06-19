@@ -1,6 +1,6 @@
 Docker image setup:
 
-1. run-configuration 
+1. run maven-configuration
 	-> clean compile install
 	-> skip tests
 	-> use jdk1.8
