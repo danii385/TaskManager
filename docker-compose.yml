@@ -1,0 +1,44 @@
+version: '3.6'
+
+services: 
+    db:
+        image: mysql
+        container_name: my_database
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: taskmanager_db
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+        ports:
+            - "3306:3306"
+    
+        volumes: 
+            - ./init:/docker-entrypoint-initdb.d
+
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin:latest
+      container_name: my_phpmyadmin
+      ports:
+        - "8082:80"
+      restart: always        
+      depends_on:
+        - db
+      environment:
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: root
+ 
+    taskmanager:
+        image: taskmanager
+        restart: always
+        ports: 
+            - 8080:8080
+        depends_on:
+            - db
+        environment:
+            - DATABASE_HOST=db
+            - DATABASE_USER=user
+            - DATABASE_PASSWORD=user
+            - DATABASE_NAME=taskmanager_db
+            - DATABASE_PORT=3306

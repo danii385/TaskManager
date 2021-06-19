@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/main_layout}">
+<head>
+<title>Register Form</title>
+</head>
+<body>
+	<div layout:fragment="content" class="container mySpace">
+		<form th:action="@{/addComment}" th:object="${comment}" method="post">
+
+			<div class="form-group">
+				<label for="Date" class="form-control-label">Date</label> <input
+					type="date" class="form-control" th:field="*{date}" id="date" />
+				<div class="text text-danger" th:if="${#fields.hasErrors('date')}"
+					th:errors="*{date}"></div>
+			</div>
+			<div class="form-group">
+				<label for="time" class="form-control-label">Time</label>
+				<input type="time" class="form-control" th:field="*{time}"
+					id="time" />
+				<div class="text text-danger"
+					th:if="${#fields.hasErrors('time')}" th:errors="*{time}"></div>
+
+			</div>
+				<div class="form-group">
+					<label for="commentText" class="form-control-label">Comment</label>
+					<textarea   class="form-control" th:field="*{commentText}"
+						id="commentText">  </textarea>
+					<div class="text text-danger"
+						th:if="${#fields.hasErrors('commentText')}" th:errors="*{commentText}"></div>
+
+				</div>
+				<input type="submit" value="Submit" class="btn btn-primary" />
+		</form>
+	</div>
+</body>
+</html>
